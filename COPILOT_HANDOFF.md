@@ -17,13 +17,13 @@ Compare three possibilities:
 
 Use explicit criteria: current functional coverage, correctness/bugs, testability, coupling, duplicated policy logic, data safety, maintenance burden, user workflow, regression risk, estimated effort, and rollout/rollback strategy. Existing working features and files are assets, not liabilities. Equally, do **not** preserve broken design merely to minimise changes.
 
-Present a short decision matrix (option, advantages, risks, estimated scope, evidence), choose one with justification, and identify what would change your conclusion.
+Present a **brief** decision comparison, choose one option based on observed evidence, and identify the **smallest high-value next change**. Avoid lengthy architectural redesign proposals or large batches of changes.
 
 ## Then propose a minimal demonstrable vertical slice
 
 - E2E target XML request/response validation.
 - Standalone scenario plan -> target request XML -> manual execution by UAT team -> response matching.
-- Shared subpopulation logic used by independent modular assessment-type validator.
+- An observable component validator (e.g. assessment type); reuse shared subpopulation logic **only if that component requires it**. Subpopulation itself is not a PCO output to validate.
 - Reviewable Excel report plus structured result records.
 - Independently verified golden and deliberately wrong response tests.
 
@@ -36,7 +36,8 @@ Present a short decision matrix (option, advantages, risks, estimated scope, evi
 - Standalone inputs are freely controllable, but validity/expected handling must be documented.
 - Do not derive expected policy outputs from actual target response.
 - Do not use unapproved confidential examples in this public repo.
-- Avoid new GUI/database/microservices/generic rule platform unless demonstrated necessary.
+- **PCO response XML does not contain subpopulation classification. Do not build a Subpopulation PCO Validator, compare an invented actual value, or add Subpopulation PASS/FAIL rows.** If a component depends on subpopulation, calculate it internally, show it optionally in the component's trace, and verify the helper with small independent unit tests.
+- Avoid new GUI/database/microservices/generic rule platform unless demonstrated necessary. No extra layers, extensive dependency frameworks or new Excel tabs for subpopulation.
 - Never publish proprietary policies, source code, real logs, customer data, credentials or internal schemas.
 
-**Your first answer should be the audit findings, recommendation (improve/refactor/rebuild) with trade-offs, and a small proposed plan — no code changes yet.**
+**Your first answer should be a concise audit, an evidence-based choice (improve/refactor/rebuild), and at most the next 1–3 focused changes — no code changes yet.** Do not turn this blueprint into a comprehensive rewrite checklist.
