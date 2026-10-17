@@ -11,7 +11,7 @@ Use existing report capabilities if they are sound. First target: four worksheet
 | Scenario List | scenario purpose, baseline ID, mutations, execution state, response match, expected handling |
 | Rule Coverage | rule/version, branches/thresholds, test types, case IDs, covered/not covered |
 
-Add frozen headers, AutoFilter, suitable conditional formatting, and direct references to request/response XML paths. Keep raw logs in authorised private storage and do not paste whole XML into Excel cells.
+Add frozen headers, AutoFilter, suitable conditional formatting, and direct references to request/response XML paths. Keep raw logs in authorised private storage and do not paste whole XML into Excel cells. **No Subpopulation PASS/FAIL rows or separate Subpopulation worksheet:** the PCO response has no actual classification. Expected subpopulation may appear only as optional explanatory context for a related component.
 
 **Count both cases and validation assertions explicitly**: one case may trigger multiple independent assertions; the two totals must not be confused. Retain JSON or CSV machine-readable results as a reproducible source for Excel. Jupyter may be used for debugging but is not the primary user interface.
 
@@ -30,7 +30,7 @@ Missing data or unknown prerequisite must not become PASS. If a target request i
 
 ## Independent correctness checks
 
-- Golden cases with expected outcomes manually confirmed from approved rules.
+- Golden cases with expected outcomes manually confirmed from approved rules. Where needed, unit-test the shared subpopulation calculation separately from PCO UAT assertion results.
 - Known-bad cases created by deliberately changing response fields must FAIL.
 - Parser covers absent/empty/nil/zero/invalid with correct distinction.
 - Scenario generator changes only intended fields; baseline immutable.
