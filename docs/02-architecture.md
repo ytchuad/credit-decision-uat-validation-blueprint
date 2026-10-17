@@ -6,7 +6,7 @@
 
 1. **Input adapter:** securely parse target XML requests/responses; preserve field states, namespaces, provenance, XPath and source files.
 2. **Canonical business context:** expose stable semantic variables to validators, not XML-specific XPath in every module; avoid collapsing fields that have different meanings.
-3. **Shared calculations:** classify subpopulation and other reused business values once, with rule ID, inputs, policy version and evaluation trace.
+3. **Shared calculations:** compute subpopulation and other reused values *only when required* by component validators. Keep rule/input evidence lightweight and reuse working functions.
 4. **Independent validators:** determine applicability, calculate expected, extract actual, compare, explain.
 5. **Standalone scenario generator:** reviewable plan → copy/mutate a validated XML baseline → case manifest. Independent of expected-result calculation.
 6. **Reporter:** Excel for reviewers plus JSON/CSV evidence. Do not embed entire raw XML in cells.
@@ -43,11 +43,13 @@ Use secure XML parsing with network/external DTD and entity expansion disabled. 
 - `compare(expected, actual, comparison_rules)`: PASS, FAIL or explicit uncertainty.
 - Structured explanation: case ID, rule ID, inputs, classification dependencies, reason, rule/engine version, XML evidence paths.
 
-Choose functions or classes consistent with working code. Only abstract when there is real reuse. Avoid actual target response in expected calculations; response-only invariants may be checked separately.
+Choose functions or classes consistent with working code. **Do not add infrastructure merely to mirror this diagram.** Only abstract when there is real reuse. Avoid actual target response in expected calculations; response-only invariants may be checked separately.
 
-## Shared subpopulation
+## Shared subpopulation (not a PCO validation module)
 
-Resolve from request-side inputs under versioned approved criteria. Support unknown or overlapping classifications and precedence if required. Downstream validators must not turn upstream unknowns into PASS. If the response reports a classification, compare it as a separately testable actual.
+**PCO response XML does not expose actual subpopulation classification.** If an observable component depends on subpopulation, compute its *expected* classification from request-side inputs using approved rules and reuse the function across relevant components. Test this helper with independently verified local unit cases (including missing and overlaps where policy requires). If classification cannot be derived reliably, mark dependent component assertions NOT_VERIFIABLE rather than PASS.
+
+Subpopulation is optional **supporting context** in component traces, not a separate PCO actual value, independent validator, PASS/FAIL row or dedicated Excel worksheet. Do not infer that PCO internally selected the same subpopulation merely because an observable component matches.
 
 ## Result example — fictional
 
