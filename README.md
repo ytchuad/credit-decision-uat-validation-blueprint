@@ -18,7 +18,7 @@ Provide requirements and implementation guidance for an existing credit-decision
 - Request XML elements are optional and vary by case. Target responses are relatively standardized.
 - Legacy-engine logs use JSON, with differing schemas and some intentionally changed business logic. Historical JSON conversion and legacy/target parity are **deferred**.
 - Standalone testing can set any input variables. Requests are passed to the target engine for execution; expected results must be independently determined from approved rules.
-- Use modular validators (assessment type, documents, scorecard/SMV, caps/limits) and shared business functions (e.g. subpopulation).
+- **Validate component outputs only** (assessment type, documents, scorecard/SMV, caps/limits). Subpopulation is a reusable internal calculation when needed, **not** a separate PCO UAT validation target: PCO response XML does not expose it.
 - Prefer **Excel** with Summary, Validation Details, Scenario List and Rule Coverage; preserve structured machine-readable results. Jupyter is optional for investigation.
 
 ## Recommended logical data flow (not a mandated implementation)
@@ -46,9 +46,9 @@ Expected calculations must not copy actual target responses. Upstream mapping ca
 
 ## First usable milestone (adjust after audit)
 
-Given fictional/approved XML and documented rules: generate a small reviewed batch of boundary/missing/invalid cases, reconcile team-returned responses, validate a shared subpopulation rule and assessment type, output an Excel report, and prove at least one known-good and one deliberately altered known-bad result.
+Given fictional/approved XML and documented rules: generate a small reviewed batch of boundary/missing/invalid cases, reconcile team-returned responses, validate an observable component output (e.g. assessment type), output an Excel report, and prove at least one known-good and one deliberately altered known-bad result. If the component needs subpopulation, unit-test that shared helper separately; do not create a Subpopulation PASS/FAIL row.
 
-These are **functional acceptance criteria**, not instructions to rebuild the existing workbench.
+These are **functional acceptance criteria**, not instructions to rebuild the existing workbench. Keep the recommendation short and prioritised; implement only what the existing workbench demonstrably needs. Do not introduce a subpopulation validator, new reporting tabs or architectural layers just for completeness.
 
 ## Public repository safety
 
