@@ -7,7 +7,7 @@ The workbench already exists and is reportedly not well designed. **Its actual s
 1. Inventory actual project files, entry points, runtimes, dependencies, tests, execution scripts, UI/reporting, and data paths.
 2. Trace an E2E request/response case through parsing, rule evaluation, comparison and reporting.
 3. Trace standalone test definition, XML generation, handoff, response matching and validation.
-4. Inspect existing shared logic (e.g. subpopulation) and duplicated logic across modules.
+4. Inspect existing shared logic (e.g. subpopulation) and duplicated logic across modules; **do not turn subpopulation into another PCO Validator** because actual classification is absent from response XML.
 5. Check whether missing vs empty vs nil vs zero vs invalid values remain distinct.
 6. Verify expected-result provenance: approved rules, fixtures, or incorrectly copied engine actuals?
 7. Run available tests with approved inputs. Record exact observed successes and failures.
@@ -39,7 +39,7 @@ A clean rebuild can be appropriate when fundamental assumptions cannot be correc
 
 Choose a thin, usable, end-to-end slice that demonstrates:
 - Parsing a valid target XML request and a corresponding response.
-- One independently verified shared classification + assessment-type rule.
+- One observable component rule (e.g. assessment type). Where it depends on subpopulation, reuse an independently unit-tested shared helper, not a separate UAT assertion.
 - Reviewing and generating a small deterministic scenario batch.
 - Reconciling returned responses including missing and ambiguous matches.
 - Reporting structured results and four Excel tabs.
@@ -53,7 +53,7 @@ If those capabilities exist and work, avoid rebuilding them. Choose a different 
 |---|---|---|---|---|
 | [inspect locally] | [observed] | [fact] | [test/path] | KEEP / FIX / REFACTOR / REPLACE |
 
-Then a concise option matrix, recommended path, first change set with filenames, tests and acceptance criteria. **Do not modify code until the local reviewer sees the recommendation**, unless separately instructed by the reviewer.
+Then a **short** option comparison, recommended path, and **one minimal next change** with tests and acceptance criteria. Avoid a large speculative implementation backlog. **Do not modify code until the local reviewer sees the recommendation**, unless separately instructed by the reviewer.
 
 ## Public/private boundary
 
