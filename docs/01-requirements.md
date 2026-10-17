@@ -18,9 +18,9 @@
 
 ## Business validation
 
-Independent modular validation for assessment type, document requirements, scorecard selection/calculation, SMV, policy caps, final limits and other proven needs. Shared business functions include subpopulation classification, derived variables, common conditions and versioned parameters.
+**UAT validation targets are observable component outputs**: assessment type, document requirements, scorecard selection/calculation, SMV, policy caps, final limits and other proven needs. Shared business functions may include subpopulation classification and derived variables **only where component validators need them**.
 
-Expected results come from approved, independent policy requirements and source inputs. A reported target-engine classification must not be used as its own expected classification. Cross-response consistency is a separate validation category.
+Expected results come from approved, independent policy requirements and source inputs. **The PCO response XML does not contain subpopulation classification.** Therefore do not create a separate subpopulation PCO validation target or PASS/FAIL assertion. Verify shared subpopulation calculation by local unit tests against independently checked rules; it can be shown as supporting context for component failures. Cross-response consistency is a separate validation category.
 
 ## Migration context
 
@@ -34,7 +34,7 @@ Expected results come from approved, independent policy requirements and source 
 
 - Full recreation of the target engine, proprietary model validation, automatic target execution or production deployment.
 - Broad legacy replay/parity in initial release.
-- A mandated new web app, database, orchestration framework or generic rules platform.
+- A mandated new web app, database, orchestration framework, generic rules platform, or standalone subpopulation validator.
 - A prescribed rewrite: the existing workbench must be examined first.
 
 ## Acceptance principles
