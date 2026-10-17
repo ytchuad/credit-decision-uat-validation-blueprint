@@ -8,7 +8,7 @@ Design discussion updated 2026-10-17. These are **generic constraints and provis
 | D-002 | Target request and response logs are XML; requests differ by case and can omit fields. | Confirmed |
 | D-003 | Legacy logs are JSON; conversion of historical legacy data to target XML is deferred. | Confirmed / deferred |
 | D-004 | Target outputs can intentionally differ from legacy due to changed policy and upstream/engine calculation boundaries. | Confirmed |
-| D-005 | Subpopulation and other reused business functions should be modular. | Agreed |
+| D-005 | Subpopulation and other reused business functions should be modular **when actually reused**; no separate Subpopulation PCO UAT Validator because classification is absent from response XML. Verify helper logic with independent unit tests. | Confirmed |
 | D-006 | Validators should be independently maintainable (assessment, documents, scorecard/SMV, caps/limits). | Agreed |
 | D-007 | Expected outcomes must have approved, independent rule provenance rather than copying actual engine outputs. | Required |
 | D-008 | Standalone scenario requests can set any target input variables; a separate team executes them. | Confirmed |
@@ -19,6 +19,8 @@ Design discussion updated 2026-10-17. These are **generic constraints and provis
 | D-013 | **Existing workbench exists but architecture choice is open:** Copilot must audit it and decide whether to improve, refactor or rebuild based on evidence and trade-offs. | Updated per owner |
 | D-014 | Public repo contains generic design and fictional examples only, no proprietary implementation. | Required |
 | D-015 | Specific folder structure, Python modules and phased milestones are suggestions, not instructions to replace working facilities. | Clarified |
+| D-016 | UAT PASS/FAIL applies to **observable component results**; expected subpopulation is optional explanatory context, not an observable PCO actual. | Confirmed |
+| D-017 | Avoid overengineering: no separate subpopulation reporting, extra frameworks or large speculative change lists. Prefer the simplest evidenced next improvement. | Confirmed |
 
 ## Deferred
 
